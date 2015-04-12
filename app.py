@@ -14,9 +14,10 @@ def index():
 parser = Parser()
 
 #converts an nltk Tree to a dictionary
-def tree2dict(tree):
-    return {tree.label(): [tree2dict(t)  if isinstance(t, Tree) else t
-                        for t in tree]}
+def tree2dict(tree, parent=None):
+    return { "parent": parent, "name": tree.label(),
+        "children" : [tree2dict(t, tree.label())  if isinstance(t, Tree)
+        else {"name": t, "parent": tree.label(), "children": None} for t in tree]}
 
 @app.route('/parsetree')
 def parse_tree():
@@ -24,6 +25,7 @@ def parse_tree():
     tree = parser.parse(sentence)
     d = tree2dict(tree)
     #log to the console for testing
+    print(tree)
     json.dump(d, sys.stdout, indent=2)
     return jsonify(sentence=d)
 
