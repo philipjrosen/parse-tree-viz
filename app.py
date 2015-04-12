@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    return send_file("client/app/index.html")
+    return send_file("static/index.html")
 
 if __name__ == '__main__':
     app.run(debug=True)
