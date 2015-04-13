@@ -1,4 +1,5 @@
 angular.module('app', [
   'ui.router',
-  'app.home'
+  'app.home',
+  'app.parseService'
 ]);
